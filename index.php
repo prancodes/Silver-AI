@@ -15,6 +15,7 @@
         <div class="mb-3">
             <label for="prompt" class="form-label"><h3>Ask Silver</h3></label>
             <input type="text" class="form-control" name="prompt" id="prompt" placeholder="Ask me anything.." required>
+            <br>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     </div>
