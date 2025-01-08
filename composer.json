@@ -1,6 +1,0 @@
-{
-    "require": {
-        "orhanerday/open-ai": "^5.2",
-        "twbs/bootstrap": "5.3.3"
-    }
-}
