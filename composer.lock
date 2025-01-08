@@ -1031,6 +1031,14 @@
                 {
                     "url": "https://tidelift.com/funding/github/packagist/phpseclib/phpseclib",
                     "type": "tidelift"
+                },
+                {
+                    "url": "https://www.patreon.com/phpseclib",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpseclib/phpseclib",
+                    "type": "tidelift"
                 }
             ],
             "time": "2024-12-14T21:12:59+00:00"
