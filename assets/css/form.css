@@ -1,13 +1,15 @@
+body{
+    background-color: rgb(7, 19, 33) !important;
+}
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-body{
-    background-color: rgba(15, 74, 177, 0.565);
-}
+
 .container{
-    background-color: azure;
+    background-color: rgb(77, 77, 77);
     width: 450px;
     padding: 1.5rem;
     margin: 50px auto;
