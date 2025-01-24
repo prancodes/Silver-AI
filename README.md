@@ -17,4 +17,3 @@ Follow the steps below to set up the project on your local machine.
 
 ---
 
-View the live project here :  [https://silver-ai.netlify.app/](https://silver-ai.netlify.app/)
