@@ -1,5 +1,10 @@
 {
     "version": 2,
+    "builds": [
+      { "src": "auth/*.php", "use": "@vercel/php" },
+      { "src": "services/*.php", "use": "@vercel/php" },
+      { "src": "*.html", "use": "@vercel/static" }
+    ],
     "routes": [
       { "src": "/auth/(.*)", "dest": "/auth/$1" },
       { "src": "/services/(.*)", "dest": "/services/$1" },
