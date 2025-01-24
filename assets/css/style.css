@@ -1,5 +1,5 @@
 body{
-    background-color: RGBA(7, 19, 33, 1) !important; 
+    background-color: rgba(7, 19, 33, 1); 
     margin: 0px;
     padding: 0px;
 }
@@ -19,7 +19,6 @@ body{
     position: fixed;
     top: 0px;
     box-shadow: 0 0 20px 0 rgba(7, 19, 33, .08);
-    cursor: pointer;
     font-weight: 500;
     font-size: .875rem;
     z-index: 50;
@@ -267,8 +266,15 @@ p{
     bottom: -15rem;
 }
 
-.pricing{
-    padding-top: 1rem;
+.pricing, .pricing-tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0rem;
+}
+
+.pricing-tab{
+    padding: 0rem !important;
 }
 
 .pf-div{
@@ -280,22 +286,146 @@ p{
     text-align: center;
 }
 
+.pf-row{
+    width: 65%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2.25rem;
+}
 
-.ft-div{
+.pf-tab{
+    flex: 0 0 auto;
+    width: 33%;
+    background: linear-gradient(108.46deg, rgba(34, 44, 56, 1) 0%, rgba(16, 28, 42, 1) 100%);
+    border-radius: .8125rem;
+    padding: 2rem 2rem 1rem 2rem;
+}
+
+.pf-tab-label-ctg{
+    font-size: 1rem;
+    color: #8b97a6;
+    margin: 0rem 0rem 0.5rem 0rem;
+}
+
+.pf-tab-label h5{
+    font-size: 1.125rem;
+    margin: 0rem 0rem 1rem 0rem;
+}
+
+.pf-tab-label h3{
+    margin: 0rem 0rem 1.5rem 0rem;
+    font-size: 2.2rem;
+}
+
+.text-muted {
+    color: #8b97a6;
+}
+
+.caption-text {
+    font-size: .875rem;
+    font-weight: 400;
+}
+
+.pf-tab-label-btn, .pf-tab-label-btn-blue{
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem 0rem;
-    border-top: #8b97a6 solid 1px;
+    background-color: rgba(41, 58, 81, 0.3);
+    color: white;
+    border-radius: 0.25rem;
+    padding: 0.625rem 1.5rem 0.625rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+}
+
+.pf-tab-label-btn-blue{
+    background-color: rgb(63, 62, 237);
+}
+
+.list{
+    list-style: none;
+    margin: 2rem 0rem 0rem 0rem;
+    padding: 0rem;
+}
+
+.list > *{
+    margin-top: 1rem;
+    line-height: 1.5rem;
+    word-spacing: 0.1rem;
+    color: #8b97a6;
+    border-bottom: rgba(255, 255, 255, .05) solid 1px;
+    padding-bottom: 0.25rem;
+    font-size: 0.9375rem;
+    font-weight: 400;
+}
+
+li:nth-last-child(1){
+    border-bottom: none;
+    padding-bottom: none;
+}
+
+.list li i{
+    color: rgba(63, 62, 237, 1);
+    font-size: 1rem;
+    line-height: 1.5rem;
+}
+
+
+/* Footer */
+
+.ft-div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 0rem;
+    border-top: rgba(255, 255, 255, 0.2) solid 1px;
     width: 85%;
 }
 
 .ft-div p{
     margin: 0px;
+    color: #8b97a6;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.6;
+    word-spacing: 0.1rem;
 }
+
+.ft-icons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.ft-icons a{
+    background-color: transparent;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 100ms ease-in-out;
+}
+
 
 a{
     text-decoration: none;
+}
+
+.nav-logo-a{
+    text-decoration: none !important;
+}
+
+
+/* pseudo classes */
+
+.ft-icons a:hover{
+    box-shadow: none;
+    scale: 1.3;
+    text-shadow: none;
 }
 
 a:hover{
@@ -303,14 +433,59 @@ a:hover{
     text-decoration: underline;
 }
 
-.btn-primary:hover{
+.btn-primary:hover, .pf-tab-label-btn:hover, .pf-tab-label-btn-blue:hover{
     box-shadow: 1px 1px 8px white;
 }
 
-.nav-logo-a{
-    text-decoration: none !important;
+.pf-tab-label-btn:hover{
+    background-color: rgb(63, 62, 237);
 }
 
+.pf-tab-label a:hover{
+    text-decoration: none;
+    text-shadow: none;
+}
+
+
+/* Page Animations */
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        scale: 0.1;
+    }
+    to {
+        opacity: 1;
+        scale: 1;
+    }
+}
+
+.animation {
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 35%;
+}
+
+@keyframes appear-row {
+    from {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    to {
+
+        opacity: 1;
+        transform: translate(0px);
+    }
+}
+
+.animation-row {
+    animation: appear-row linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+}
+
+
+/* Media queries */
 
 @media (max-width : 1200px){
     .wc-text-section h5{
@@ -363,6 +538,13 @@ a:hover{
 
     .pf-title{
         font-size: 3rem;
+    }
+
+    .pf-row{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap !important;
     }
 }
 
@@ -419,7 +601,30 @@ a:hover{
         font-size:x-large;
     }
 
+    .pf-tab{
+        width: 70%;
+    }
 }
 
+@media (max-width : 500px){
+    .cp-joinMsg{
+        font-size: medium;
+        padding: 0rem 1rem;
+    }
+
+    .cont-text, .pf-text{
+        width: auto;
+        padding: 0rem 1rem 2rem 1rem;
+    }
+
+    .pf-title{
+        font-size: 2.25rem;
+        margin-top: 0rem;
+    }
+
+    .companies-tab{
+        padding-top: 4rem;
+    }
+}
 
 
