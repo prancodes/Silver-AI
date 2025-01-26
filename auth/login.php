@@ -29,9 +29,6 @@
                     <input type="password" name="password" id="password" placeholder="Password" required>
                     <label for="password">Password</label>
                 </div>
-                <p class="recover">
-                    <a href="#">Recover Password</a>
-                </p>
                 <input type="submit" class="button" value="Sign In" name="signIn">
             </form>
             <div class="link">
