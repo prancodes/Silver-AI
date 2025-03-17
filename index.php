@@ -22,6 +22,7 @@
         <div class="navbar">
             <a href="/" class="nav-logo-a"><h2 class="nav-logo"><i class="fa-duotone fa-solid fa-circle-nodes" style="--fa-primary-color: #ffffff; --fa-secondary-color: #ffffff;"></i>Silver AI</h2>
             </a>
+            
             <div class="nav-el">
                 <a href="/">Home</a>
                 <a href="#usecases">Use Cases</a>
