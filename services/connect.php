@@ -12,7 +12,7 @@ $db   = $_ENV['DB_NAME'];
 $port = $_ENV['DB_PORT'];
 
 // Get CA certificate path from env variable
-$ca_cert_path = $_ENV['DB_SSL_CA'];
+$ca_cert_path = '../certs/cert.pem';
 
 $mysqli = mysqli_init();
 // Set SSL using the CA certificate path
