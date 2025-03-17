@@ -8,11 +8,20 @@ $dotenv->load();
 $host = $_ENV['DB_HOST'];
 $user = $_ENV['DB_USER'];
 $pass = $_ENV['DB_PASS'];
-$db = $_ENV['DB_NAME'];
+$db   = $_ENV['DB_NAME'];
 $port = $_ENV['DB_PORT'];
 
-$conn = new mysqli($host, $user, $pass, $db, $port);
-if ($conn->connect_error) {
-    die("Failed to connect to DB: " . $conn->connect_error);
+// Get CA certificate path from env variable
+$ca_cert_path = $_ENV['DB_SSL_CA'];
+
+$mysqli = mysqli_init();
+// Set SSL using the CA certificate path
+mysqli_ssl_set($mysqli, NULL, NULL, $ca_cert_path, NULL, NULL);
+
+$mysqli->real_connect($host, $user, $pass, $db, $port, NULL, MYSQLI_CLIENT_SSL);
+if ($mysqli->connect_error) {
+    die("Failed to connect to DB: " . $mysqli->connect_error);
 }
+
+$conn = $mysqli;
 ?>
