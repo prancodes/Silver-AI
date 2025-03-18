@@ -24,7 +24,7 @@ if (isset($_POST['signUp'])) {
         $insertQuery->bind_param("sss", $username, $email, $password);
 
         if ($insertQuery->execute()) {
-            header("location:../views/silver.html");
+            header("location:../views/silver.php");
         } else {
             echo "ERROR: " . $conn->error;
         }
@@ -44,7 +44,7 @@ if (isset($_POST['signIn'])) {
         session_start();
         $row = $result->fetch_assoc();
         $_SESSION['email'] = $row['email'];
-        header("location:../views/silver.html");
+        header("location:../views/silver.php");
         exit();
     } else {
         echo "Not Found, Incorrect Email or Password";

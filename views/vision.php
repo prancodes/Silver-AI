@@ -22,7 +22,7 @@
 </head>
 <body>
     <div class="navbar">
-        <a href="./vision.html" class="nav-logo-a">
+        <a href="./vision.php" class="nav-logo-a">
           <h2 class="nav-logo"><i class="fa-duotone fa-solid fa-circle-nodes" style="--fa-primary-color: #ffffff; --fa-secondary-color: #ffffff;"></i>Silver Vision</h2>
         </a>
         <div class="nav-login-section">
@@ -47,7 +47,7 @@
         </div>
     
         <div class="img-desc">
-          <a href="./silver.html" class="nav-logo-a"><div class="btn-primary">Silver AI</div></a>
+          <a href="./silver.php" class="nav-logo-a"><div class="btn-primary">Silver AI</div></a>
         </div>
     </div>
 

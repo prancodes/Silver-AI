@@ -16,42 +16,11 @@
 </head>
 
 <body>
-    <?php
-    require_once __DIR__ . '/../vendor/autoload.php';
-
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
-    $dotenv->load();
-
-    $clientID = $_ENV['GOOGLE_CLIENT_ID'];
-    $clientSecret = $_ENV['GOOGLE_CLIENT_SECRET'];
-    $redirectUri = 'http://localhost/Silver/Silver-AI/views/silver.html';
-
-    $client = new Google_Client();
-    $client->setClientId($clientID);
-    $client->setClientSecret($clientSecret);
-    $client->setRedirectUri($redirectUri);
-    $client->addScope("email");
-    $client->addScope("profile");
-
-    if (isset($_GET['code'])) {
-        $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
-        $client->setAccessToken($token['access_token']);
-
-        $google_oauth = new Google_Service_Oauth2($client);
-        $google_account_info = $google_oauth->userinfo->get();
-        $email = $google_account_info->email;
-        $name = $google_account_info->name;
-    ?>
-        <div class="input-user">
-            <label for="email">Email <?php echo $email; ?></label>
-            <label for="name">Name <?php echo $name; ?></label>
-        </div>
-    <?php } else { ?>
         <div class="container" id="signInForm">
             <h1 class="form-title">Sign In</h1>
             <form action="../services/register.php" method="post">
                 <div class="input-user">
-                    <i class="fas fa-envelope"></i>
+                    <i class="fas fa-envelope"></i> 
                     <input type="email" name="email" id="email" placeholder="Valid Email ID">
                     <label for="email">Email</label>
                 </div>
@@ -60,21 +29,12 @@
                     <input type="password" name="password" id="password" placeholder="Password" required>
                     <label for="password">Password</label>
                 </div>
-                <p class="recover">
-                    <a href="#">Recover Password</a>
-                </p>
                 <input type="submit" class="button" value="Sign In" name="signIn">
             </form>
-            <p class="or">OR</p>
-            <div class="icons">
-                <a href="<?php echo $client->createAuthUrl() ?>"><i class="fab fa-google"></i></a>
-            </div>
             <div class="link">
                 <p>Don't Have Account Yet?</p>
                 <a href="../auth/signup.php"><button id="signUpButton">Sign Up</button></a>
             </div>
         </div>
-    <?php } ?>
 </body>
-
 </html>
