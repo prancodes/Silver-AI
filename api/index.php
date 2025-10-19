@@ -1,5 +1,5 @@
 <?php
-// api/index.php - Main routing file for Silver AI
+// api/index.php - Main routing file for Silver AI with fixed mobile menu
 session_start();
 
 // Get the request URI and clean it
@@ -15,39 +15,27 @@ $username = $_SESSION['username'] ?? '';
 
 // Route handling
 switch (true) {
-    // Home page
     case ($uri === '/' || $uri === '/index.php'):
         renderHomePage($isLoggedIn, $username);
         break;
-
-    // Authentication routes
     case ($uri === '/auth/login.php'):
         require_once __DIR__ . '/auth/login.php';
         break;
-
     case ($uri === '/auth/signup.php'):
         require_once __DIR__ . '/auth/signup.php';
         break;
-
     case ($uri === '/auth/logout.php'):
         require_once __DIR__ . '/auth/logout.php';
         break;
-
-    // Views routes (protected)
     case ($uri === '/views/silver.php'):
         require_once __DIR__ . '/views/silver.php';
         break;
-
     case ($uri === '/views/vision.php'):
         require_once __DIR__ . '/views/vision.php';
         break;
-
-    // Services routes (for AJAX calls)
     case ($uri === '/services/register.php'):
         require_once __DIR__ . '/services/register.php';
         break;
-
-    // Default 404
     default:
         http_response_code(404);
         echo "<h1>404 - Page Not Found</h1>";
@@ -80,74 +68,77 @@ function renderHomePage($isLoggedIn, $username)
         <link rel="manifest" href="/favicon/site.webmanifest" />
 
         <style>
-            /* Mobile menu styles */
+            /* Mobile menu container */
             @media (max-width: 768px) {
 
-                .nav-el,
-                .nav-login-section {
+                /* Create a single mobile menu container */
+                .mobile-menu {
                     position: fixed;
-                    top: 70px;
+                    top: 0;
                     right: -100%;
-                    width: 250px;
+                    width: 280px;
+                    height: 100vh;
                     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                    padding: 20px;
-                    border-radius: 10px 0 0 10px;
+                    padding: 80px 20px 20px 20px;
                     transition: right 0.3s ease;
-                    z-index: 999;
-                    box-shadow: -5px 5px 20px rgba(0, 0, 0, 0.3);
+                    z-index: 998;
+                    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+                    overflow-y: auto;
                 }
 
-                .nav-el.active,
-                .nav-login-section.active {
+                .mobile-menu.active {
                     right: 0;
                 }
 
-                .nav-el {
-                    flex-direction: column;
-                    gap: 15px;
-                    top: 70px;
+                /* Hide desktop nav items on mobile */
+                .nav-el,
+                .nav-login-section {
+                    display: none !important;
                 }
 
-                .nav-el a {
-                    padding: 12px 15px;
-                    border-radius: 8px;
-                    transition: background 0.3s ease;
+                /* Style mobile menu items */
+                .mobile-menu .menu-section {
+                    margin-bottom: 30px;
+                }
+
+                .mobile-menu .menu-section a {
                     display: block;
+                    color: white;
+                    padding: 15px;
+                    margin-bottom: 10px;
+                    border-radius: 8px;
+                    text-decoration: none;
+                    transition: background 0.3s ease;
+                    font-size: 16px;
                 }
 
-                .nav-el a:hover {
+                .mobile-menu .menu-section a:hover {
                     background: rgba(255, 255, 255, 0.1);
                 }
 
-                .nav-login-section {
-                    flex-direction: column;
-                    gap: 10px;
-                    top: 280px;
-                    align-items: stretch;
+                .mobile-menu .user-info {
+                    padding: 15px;
+                    margin-bottom: 20px;
+                    background: rgba(255, 255, 255, 0.1);
+                    border-radius: 8px;
+                    color: white;
+                    text-align: center;
                 }
 
-                .nav-login-section span {
-                    display: block;
-                    text-align: center;
-                    margin-bottom: 10px !important;
-                }
-
-                .nav-login-section a {
-                    width: 100%;
-                    text-align: center;
+                .mobile-menu .menu-divider {
+                    height: 1px;
+                    background: rgba(255, 255, 255, 0.2);
+                    margin: 20px 0;
                 }
 
                 .sidebar {
-                    display: flex;
+                    display: flex !important;
                     align-items: center;
                     justify-content: center;
                     cursor: pointer;
                     padding: 10px;
-                    transition: transform 0.3s ease;
-                }
-
-                .sidebar:hover {
-                    transform: scale(1.1);
+                    z-index: 999;
+                    position: relative;
                 }
 
                 .sidebar i {
@@ -162,6 +153,10 @@ function renderHomePage($isLoggedIn, $username)
 
             @media (min-width: 769px) {
                 .sidebar {
+                    display: none !important;
+                }
+
+                .mobile-menu {
                     display: none !important;
                 }
             }
@@ -192,6 +187,34 @@ function renderHomePage($isLoggedIn, $username)
             </div>
             <div class="sidebar">
                 <i class="fa-solid fa-bars" style="color: #ffffff;"></i>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu">
+            <?php if ($isLoggedIn): ?>
+                <div class="user-info">
+                    <strong>Welcome, <?php echo htmlspecialchars($username); ?>!</strong>
+                </div>
+            <?php endif; ?>
+
+            <div class="menu-section">
+                <a href="/">🏠 Home</a>
+                <a href="#usecases">💼 Use Cases</a>
+                <a href="#features">✨ Features</a>
+                <a href="#pricing">💰 Pricing</a>
+            </div>
+
+            <div class="menu-divider"></div>
+
+            <div class="menu-section">
+                <?php if ($isLoggedIn): ?>
+                    <a href="/views/silver.php">🤖 Dashboard</a>
+                    <a href="/auth/logout.php">🚪 Logout</a>
+                <?php else: ?>
+                    <a href="/auth/login.php">🔐 Login</a>
+                    <a href="/auth/signup.php">📝 Sign Up</a>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -367,13 +390,12 @@ function renderHomePage($isLoggedIn, $username)
             // Mobile hamburger menu functionality
             document.addEventListener('DOMContentLoaded', function () {
                 const hamburger = document.querySelector('.sidebar');
-                const navEl = document.querySelector('.nav-el');
-                const navLoginSection = document.querySelector('.nav-login-section');
+                const mobileMenu = document.querySelector('.mobile-menu');
 
-                if (hamburger) {
-                    hamburger.addEventListener('click', function () {
-                        navEl.classList.toggle('active');
-                        navLoginSection.classList.toggle('active');
+                if (hamburger && mobileMenu) {
+                    hamburger.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        mobileMenu.classList.toggle('active');
 
                         const icon = hamburger.querySelector('i');
                         if (icon.classList.contains('fa-bars')) {
@@ -385,18 +407,27 @@ function renderHomePage($isLoggedIn, $username)
                         }
                     });
 
+                    // Close menu when clicking outside
                     document.addEventListener('click', function (event) {
-                        const isClickInside = hamburger.contains(event.target) ||
-                            navEl.contains(event.target) ||
-                            navLoginSection.contains(event.target);
+                        if (!mobileMenu.contains(event.target) && !hamburger.contains(event.target)) {
+                            if (mobileMenu.classList.contains('active')) {
+                                mobileMenu.classList.remove('active');
+                                const icon = hamburger.querySelector('i');
+                                icon.classList.remove('fa-times');
+                                icon.classList.add('fa-bars');
+                            }
+                        }
+                    });
 
-                        if (!isClickInside && navEl.classList.contains('active')) {
-                            navEl.classList.remove('active');
-                            navLoginSection.classList.remove('active');
+                    // Close menu when clicking a link
+                    const menuLinks = mobileMenu.querySelectorAll('a');
+                    menuLinks.forEach(link => {
+                        link.addEventListener('click', function () {
+                            mobileMenu.classList.remove('active');
                             const icon = hamburger.querySelector('i');
                             icon.classList.remove('fa-times');
                             icon.classList.add('fa-bars');
-                        }
+                        });
                     });
                 }
             });

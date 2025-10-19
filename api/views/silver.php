@@ -1,7 +1,9 @@
 <?php
 // api/views/silver.php
 // Session protection: Check if user is logged in
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
     header("Location: /auth/login.php");
@@ -43,10 +45,10 @@ $username = $_SESSION['username'] ?? 'User';
     </div>
 
     <div class="img-desc">
-      <a href="./vision.php" class="nav-logo-a"><div class="btn-primary">Silver Vision</div></a>
+      <a href="/views/vision.php" class="nav-logo-a"><div class="btn-primary">Silver Vision</div></a>
     </div>
   </div>
 
-  <script src="../assets/js/silver.js"></script>
+  <script src="/assets/js/silver.js"></script>
 </body>
 </html>
