@@ -1,16 +1,12 @@
 # Silver AI
 
-Silver AI is an advanced AI-driven platform designed to deliver intelligent services efficiently. This project provides a structured architecture focusing on authentication, asset management, and seamless user experience.
-
-## Table of Contents
-- [About](#about)
-- [Features](#features)
-- [Project Structure](#project-structure)
-- [Technologies Used](#technologies-used)
-- [Deployment](#deployment)
-
-## About
 Silver AI is designed to provide an interactive and AI-powered experience through well-defined modules. It includes authentication, service management, and frontend integration, ensuring scalability and efficiency.
+
+**Live Demo:**
+Silver AI is deployed and accessible at:
+[https://silveraiweb.vercel.app](https://silveraiweb.vercel.app)
+
+---
 
 ## Features
 - **User Authentication**: Secure login, registration, and session handling.
@@ -22,43 +18,37 @@ Silver AI is designed to provide an interactive and AI-powered experience throug
 ```
 Silver-AI/
 │
-├── assets/            # Static assets like CSS and JS
+├── api/                # Serverless functions for Vercel
+│   ├── index.php       # Main router and homepage
+│   ├── auth/           # Authentication endpoints
+│   │   ├── login.php
+│   │   ├── signup.php
+│   │   └── logout.php
+│   ├── services/       # Backend services and DB connection
+│   │   ├── connect.php
+│   │   └── register.php
+│   └── views/          # Page templates
+│       ├── silver.php
+│       └── vision.php
+│
+├── assets/             # Static assets (CSS, JS)
 │   ├── css/
 │   └── js/
 │
-├── auth/              # Handles user authentication (login, logout, signup)
-│   ├── login.php
-│   ├── logout.php
-│   ├── signup.php
-│
-├── certs/             # Secure MySQL connection files
-│
-├── favicon/           # Favicon and web app manifest files
-│
-├── services/          # Backend services and Database Connection
-│   ├── connect.php
-│   ├── register.php
-│
-├── views/             # HTML templates for the frontend
-│   ├── silver.php
-│   ├── vision.php
-
-├── .gitignore         # Files to be ignored in Git version control
-├── composer.json      # PHP dependencies
-├── composer.lock      # Manages PHP dependency versions
-├── index.php          # Main entry point for the application
-└── README.md          # Documentation
+├── certs/              # SSL certificates
+├── favicon/            # Favicon and web app manifest files
+├── composer.json       # PHP dependencies
+├── composer.lock       # Locked package versions
+├── vercel.json         # Vercel configuration
+├── .vercelignore       # Files to ignore on Vercel
+└── README.md           # Documentation 
 ```
 
 ## Technologies Used
 - **Frontend**: HTML, CSS, JavaScript
-- **Backend**: PHP
+- **Backend**: PHP with Composer packages
 - **Database**: MySQL
-- **Version Control**: Git
-
-## Deployment
-Silver AI is deployed and accessible at:
-[https://silver-ai.up.railway.app](https://silver-ai.up.railway.app/)
+- **Version Control**: git, Github
 
 ---
 May your code be bug-free, your commits be meaningful, and your coffee stay strong! 🚀
