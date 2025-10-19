@@ -4,7 +4,7 @@ Silver AI is designed to provide an interactive and AI-powered experience throug
 
 **Live Demo:**
 Silver AI is deployed and accessible at:
-[https://silveraiweb.vercel.app](https://silveraiweb.vercel.app)
+[https://silver-ai2.vercel.app](https://silver-ai2.vercel.app)
 
 ---
 

@@ -1,6 +1,5 @@
 <?php
 // api/services/register.php
-// Fix: Use correct relative path to connect.php
 require_once __DIR__ . '/connect.php';
 
 if (isset($_POST['signUp'])) {
@@ -28,8 +27,7 @@ if (isset($_POST['signUp'])) {
         $insertQuery->bind_param("sss", $username, $email, $password);
 
         if ($insertQuery->execute()) {
-            // Start session and set user data
-            session_start();
+            // Session already started in index.php, just set variables
             $_SESSION['email'] = $email;
             $_SESSION['username'] = $username;
             header("Location: /views/silver.php");
@@ -56,7 +54,7 @@ if (isset($_POST['signIn'])) {
     $result = $sql->get_result();
 
     if ($result->num_rows > 0) {
-        session_start();
+        // Session already started in index.php, just set variables
         $row = $result->fetch_assoc();
         $_SESSION['email'] = $row['email'];
         $_SESSION['username'] = $row['username'];
