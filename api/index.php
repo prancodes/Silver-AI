@@ -78,6 +78,94 @@ function renderHomePage($isLoggedIn, $username)
         <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
         <meta name="apple-mobile-web-app-title" content="Silver AI" />
         <link rel="manifest" href="/favicon/site.webmanifest" />
+
+        <style>
+            /* Mobile menu styles */
+            @media (max-width: 768px) {
+
+                .nav-el,
+                .nav-login-section {
+                    position: fixed;
+                    top: 70px;
+                    right: -100%;
+                    width: 250px;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    padding: 20px;
+                    border-radius: 10px 0 0 10px;
+                    transition: right 0.3s ease;
+                    z-index: 999;
+                    box-shadow: -5px 5px 20px rgba(0, 0, 0, 0.3);
+                }
+
+                .nav-el.active,
+                .nav-login-section.active {
+                    right: 0;
+                }
+
+                .nav-el {
+                    flex-direction: column;
+                    gap: 15px;
+                    top: 70px;
+                }
+
+                .nav-el a {
+                    padding: 12px 15px;
+                    border-radius: 8px;
+                    transition: background 0.3s ease;
+                    display: block;
+                }
+
+                .nav-el a:hover {
+                    background: rgba(255, 255, 255, 0.1);
+                }
+
+                .nav-login-section {
+                    flex-direction: column;
+                    gap: 10px;
+                    top: 280px;
+                    align-items: stretch;
+                }
+
+                .nav-login-section span {
+                    display: block;
+                    text-align: center;
+                    margin-bottom: 10px !important;
+                }
+
+                .nav-login-section a {
+                    width: 100%;
+                    text-align: center;
+                }
+
+                .sidebar {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    padding: 10px;
+                    transition: transform 0.3s ease;
+                }
+
+                .sidebar:hover {
+                    transform: scale(1.1);
+                }
+
+                .sidebar i {
+                    font-size: 24px;
+                    transition: transform 0.3s ease;
+                }
+
+                .sidebar i.fa-times {
+                    transform: rotate(90deg);
+                }
+            }
+
+            @media (min-width: 769px) {
+                .sidebar {
+                    display: none !important;
+                }
+            }
+        </style>
     </head>
 
     <body>
@@ -97,7 +185,6 @@ function renderHomePage($isLoggedIn, $username)
             <div class="nav-login-section">
                 <?php if ($isLoggedIn): ?>
                     <span style="color: white; margin-right: 15px;">Welcome, <?php echo htmlspecialchars($username); ?></span>
-                    <a href="/views/silver.php" class="login nav-logo-a btn-primary" style="margin-right: 10px;">Dashboard</a>
                     <a href="/auth/logout.php" class="login nav-logo-a btn-primary">Logout</a>
                 <?php else: ?>
                     <a href="/auth/login.php" class="login nav-logo-a btn-primary" id="login">Login</a>
@@ -276,6 +363,44 @@ function renderHomePage($isLoggedIn, $username)
             </div>
         </div>
 
+        <script>
+            // Mobile hamburger menu functionality
+            document.addEventListener('DOMContentLoaded', function () {
+                const hamburger = document.querySelector('.sidebar');
+                const navEl = document.querySelector('.nav-el');
+                const navLoginSection = document.querySelector('.nav-login-section');
+
+                if (hamburger) {
+                    hamburger.addEventListener('click', function () {
+                        navEl.classList.toggle('active');
+                        navLoginSection.classList.toggle('active');
+
+                        const icon = hamburger.querySelector('i');
+                        if (icon.classList.contains('fa-bars')) {
+                            icon.classList.remove('fa-bars');
+                            icon.classList.add('fa-times');
+                        } else {
+                            icon.classList.remove('fa-times');
+                            icon.classList.add('fa-bars');
+                        }
+                    });
+
+                    document.addEventListener('click', function (event) {
+                        const isClickInside = hamburger.contains(event.target) ||
+                            navEl.contains(event.target) ||
+                            navLoginSection.contains(event.target);
+
+                        if (!isClickInside && navEl.classList.contains('active')) {
+                            navEl.classList.remove('active');
+                            navLoginSection.classList.remove('active');
+                            const icon = hamburger.querySelector('i');
+                            icon.classList.remove('fa-times');
+                            icon.classList.add('fa-bars');
+                        }
+                    });
+                }
+            });
+        </script>
     </body>
 
     </html>
