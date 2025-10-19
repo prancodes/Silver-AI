@@ -9,11 +9,15 @@ $uri = parse_url($request_uri, PHP_URL_PATH);
 // Remove query parameters for routing
 $uri = strtok($uri, '?');
 
+// Check if user is logged in
+$isLoggedIn = isset($_SESSION['email']) && !empty($_SESSION['email']);
+$username = $_SESSION['username'] ?? '';
+
 // Route handling
 switch (true) {
     // Home page
     case ($uri === '/' || $uri === '/index.php'):
-        renderHomePage();
+        renderHomePage($isLoggedIn, $username);
         break;
 
     // Authentication routes
@@ -29,7 +33,7 @@ switch (true) {
         require_once __DIR__ . '/auth/logout.php';
         break;
 
-    // Views routes
+    // Views routes (protected)
     case ($uri === '/views/silver.php'):
         require_once __DIR__ . '/views/silver.php';
         break;
@@ -50,7 +54,7 @@ switch (true) {
         break;
 }
 
-function renderHomePage()
+function renderHomePage($isLoggedIn, $username)
 {
     ?>
     <!DOCTYPE html>
@@ -91,7 +95,13 @@ function renderHomePage()
                 <a href="#pricing">Pricing</a>
             </div>
             <div class="nav-login-section">
-                <a href="/auth/login.php" class="login nav-logo-a btn-primary" id="login">Login</a>
+                <?php if ($isLoggedIn): ?>
+                    <span style="color: white; margin-right: 15px;">Welcome, <?php echo htmlspecialchars($username); ?></span>
+                    <a href="/views/silver.php" class="login nav-logo-a btn-primary" style="margin-right: 10px;">Dashboard</a>
+                    <a href="/auth/logout.php" class="login nav-logo-a btn-primary">Logout</a>
+                <?php else: ?>
+                    <a href="/auth/login.php" class="login nav-logo-a btn-primary" id="login">Login</a>
+                <?php endif; ?>
             </div>
             <div class="sidebar">
                 <i class="fa-solid fa-bars" style="color: #ffffff;"></i>

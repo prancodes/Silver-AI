@@ -1,14 +1,10 @@
 <?php
-
-// CORS headers
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-
-include './connect.php';
+// api/services/register.php
+// Fix: Use correct relative path to connect.php
+require_once __DIR__ . '/connect.php';
 
 if (isset($_POST['signUp'])) {
-    $username = $_POST['Username'];
+    $username = $_POST['username'];
     $email = $_POST['email'];
     $password = md5($_POST['password']);
 
@@ -24,7 +20,12 @@ if (isset($_POST['signUp'])) {
         $insertQuery->bind_param("sss", $username, $email, $password);
 
         if ($insertQuery->execute()) {
-            header("location:../views/silver.php");
+            // Start session and set user data
+            session_start();
+            $_SESSION['email'] = $email;
+            $_SESSION['username'] = $username;
+            header("Location: /views/silver.php");
+            exit();
         } else {
             echo "ERROR: " . $conn->error;
         }
@@ -44,7 +45,8 @@ if (isset($_POST['signIn'])) {
         session_start();
         $row = $result->fetch_assoc();
         $_SESSION['email'] = $row['email'];
-        header("location:../views/silver.php");
+        $_SESSION['username'] = $row['username'];
+        header("Location: /views/silver.php");
         exit();
     } else {
         echo "Not Found, Incorrect Email or Password";

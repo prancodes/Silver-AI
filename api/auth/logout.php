@@ -1,7 +1,8 @@
 <?php
-
+// api/auth/logout.php
 session_start();
-if(session_destroy()){
-    header("location:../");
-}
+session_unset();
+session_destroy();
+header("Location: /");
+exit();
 ?>
