@@ -4,9 +4,17 @@
 require_once __DIR__ . '/connect.php';
 
 if (isset($_POST['signUp'])) {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = md5($_POST['password']);
+    // Validate username exists in POST data
+    $username = isset($_POST['username']) ? trim($_POST['username']) : null;
+    $email = isset($_POST['email']) ? trim($_POST['email']) : null;
+    $password = isset($_POST['password']) ? trim($_POST['password']) : null;
+
+    // Validation
+    if (empty($username) || empty($email) || empty($password)) {
+        die("Error: All fields are required (username, email, password)");
+    }
+
+    $password = md5($password);
 
     $checkEmail = $conn->prepare("SELECT * FROM users WHERE email = ?");
     $checkEmail->bind_param("s", $email);
@@ -33,8 +41,14 @@ if (isset($_POST['signUp'])) {
 }
 
 if (isset($_POST['signIn'])) {
-    $email = $_POST['email'];
-    $password = md5($_POST['password']);
+    $email = isset($_POST['email']) ? trim($_POST['email']) : null;
+    $password = isset($_POST['password']) ? trim($_POST['password']) : null;
+
+    if (empty($email) || empty($password)) {
+        die("Error: Email and password are required");
+    }
+
+    $password = md5($password);
 
     $sql = $conn->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
     $sql->bind_param("ss", $email, $password);

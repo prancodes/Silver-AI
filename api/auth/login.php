@@ -21,7 +21,7 @@
             <form action="../services/register.php" method="post">
                 <div class="input-user">
                     <i class="fas fa-envelope"></i> 
-                    <input type="email" name="email" id="email" placeholder="Valid Email ID">
+                    <input type="email" name="email" id="email" placeholder="Valid Email ID" required>
                     <label for="email">Email</label>
                 </div>
                 <div class="input-user">
