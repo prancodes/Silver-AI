@@ -13,7 +13,9 @@ if (isset($_POST['signUp'])) {
         die("Error: All fields are required (username, email, password)");
     }
 
-    $password = md5($password);
+    // CHANGED: Replaced insecure md5() with password_hash()
+    // This creates a strong, salted hash.
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
     $checkEmail = $conn->prepare("SELECT * FROM users WHERE email = ?");
     $checkEmail->bind_param("s", $email);
@@ -24,7 +26,9 @@ if (isset($_POST['signUp'])) {
         echo "Email Address Already Exists!";
     } else {
         $insertQuery = $conn->prepare("INSERT INTO users(username, email, password, created_at) VALUES (?, ?, ?, NOW())");
-        $insertQuery->bind_param("sss", $username, $email, $password);
+        
+        // CHANGED: Bind the new $hashed_password instead of the md5 password
+        $insertQuery->bind_param("sss", $username, $email, $hashed_password);
 
         if ($insertQuery->execute()) {
             // Session already started in index.php, just set variables
@@ -46,21 +50,29 @@ if (isset($_POST['signIn'])) {
         die("Error: Email and password are required");
     }
 
-    $password = md5($password);
-
-    $sql = $conn->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
-    $sql->bind_param("ss", $email, $password);
+    // CHANGED: The entire login logic is different.
+    // 1. We only select the user by their email.
+    $sql = $conn->prepare("SELECT * FROM users WHERE email = ?");
+    $sql->bind_param("s", $email);
     $sql->execute();
     $result = $sql->get_result();
 
     if ($result->num_rows > 0) {
-        // Session already started in index.php, just set variables
         $row = $result->fetch_assoc();
-        $_SESSION['email'] = $row['email'];
-        $_SESSION['username'] = $row['username'];
-        header("Location: /views/silver.php");
-        exit();
+        
+        // 2. We use password_verify() to securely check the submitted password against the hash stored in the database.
+        if (password_verify($password, $row['password'])) {
+            // Session already started in index.php, just set variables
+            $_SESSION['email'] = $row['email'];
+            $_SESSION['username'] = $row['username'];
+            header("Location: /views/silver.php");
+            exit();
+        } else {
+            // Invalid password
+            echo "Not Found, Incorrect Email or Password";
+        }
     } else {
+        // No user found with that email
         echo "Not Found, Incorrect Email or Password";
     }
 }
